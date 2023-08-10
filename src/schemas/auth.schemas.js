@@ -8,3 +8,8 @@ export const signUpSchema = joi.object({
     telefone: joi.string().required(),
     foto: joi.string().uri().required()
 })
+
+export const signInSchema = joi.object({
+    email: joi.string().required(),
+    password: joi.string().min(3).required(),
+})
