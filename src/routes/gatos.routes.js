@@ -1,10 +1,12 @@
 import { Router } from "express"
+import validateAuth from "../middlewares/validateAuth.js"
+import { getGatos, getGatosById, getMyGatos, postGato } from "../controllers/gatos.controllers.js"
 
 const gatosRouter = Router()
 
-gatosRouter.post("/gatos")
-gatosRouter.get("/gatos")
-gatosRouter.get("/gatos/:id")
-gatosRouter.get("/gatos/me")
+gatosRouter.post("/gatos", validateAuth, postGato)
+gatosRouter.get("/gatos", validateAuth, getGatos)
+gatosRouter.get("/gatos/:id", validateAuth, getGatosById)
+gatosRouter.get("/gatos/me", validateAuth, getMyGatos)
 
 export default gatosRouter
