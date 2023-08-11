@@ -10,6 +10,6 @@ export default async function validateAuth(req, res, next) {
         res.locals.userId = sessao.rows[0].idusuario
         next()
     } catch (error) {
-        console.log(error.message)
+        res.status(500).send(error.message)
     }
 }
