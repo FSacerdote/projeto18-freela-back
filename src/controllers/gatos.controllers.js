@@ -1,3 +1,5 @@
+import { db } from "../database/database.connection.js"
+
 export async function getGatos(req, res) {
     try {
         const gatos = await db.query(`SELECT * FROM gatos;`)
@@ -33,6 +35,7 @@ export async function postGato(req, res) {
     const { nome, idade, genero, fotoperfil } = req.body
     try {
         await db.query(`INSERT INTO gatos (nome, idade, genero, idtutor, fotoperfil) VALUES ($1, $2, $3, $4, $5)`, [nome, idade, genero, userId, fotoperfil])
+        res.send()
     } catch (error) {
         res.status(500).send(error.message)
     }
