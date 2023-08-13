@@ -7,6 +7,6 @@ const gatosRouter = Router()
 gatosRouter.post("/gatos", validateAuth, postGato)
 gatosRouter.get("/gatos", validateAuth, getGatos)
 gatosRouter.get("/gatos/:id", validateAuth, getGatosById)
-gatosRouter.get("/gatos/me", validateAuth, getMyGatos)
+gatosRouter.get("/me/gatos", validateAuth, getMyGatos)
 
 export default gatosRouter

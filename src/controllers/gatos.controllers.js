@@ -2,7 +2,7 @@ import { db } from "../database/database.connection.js"
 
 export async function getGatos(req, res) {
     try {
-        const gatos = await db.query(`SELECT * FROM gatos;`)
+        const gatos = await db.query(`SELECT * FROM gatos WHERE disponibilidade=true;`)
         res.send(gatos.rows)
     } catch (error) {
         res.status(500).send(error.message)
@@ -24,7 +24,7 @@ export async function getMyGatos(req, res) {
     const { userId } = res.locals
     try {
         const gatos = await db.query(`SELECT * FROM gatos WHERE idtutor=$1;`, [userId])
-        res.send(gatos)
+        res.send(gatos.rows)
     } catch (error) {
         res.status(500).send(error.message)
     }
