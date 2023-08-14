@@ -1,5 +1,4 @@
-import { db } from "../database/database.connection.js"
-import { getActiveCats, getCatById, getMyCats, insertGato, searchCat, updateStatus } from "../repositories/gatos.repository.js"
+import { deleteCat, editCat, getActiveCats, getCatById, getMyCats, insertGato, searchCat, updateStatus } from "../repositories/gatos.repository.js"
 
 export async function getGatos(req, res) {
     try {
@@ -51,6 +50,35 @@ export async function changeStatus(req, res) {
         if (userId !== gato.rows[0].idtutor) return res.sendStatus(401)
         const { disponibilidade } = gato.rows[0]
         await updateStatus(disponibilidade, id)
+        res.send()
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
+
+export async function editGato(req, res) {
+    const { id } = req.params
+    const { userId } = res.locals
+    const { nome, idade, genero, fotoperfil } = req.body
+    try {
+        const gato = await searchCat(id)
+        if (gato.rowCount === 0) return res.sendStatus(404)
+        if (userId !== gato.rows[0].idtutor) return res.sendStatus(401)
+        await editCat(nome, idade, genero, fotoperfil, id)
+        res.send()
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
+
+export async function deleteGato(req,res) {
+    const { id } = req.params
+    const { userId } = res.locals
+    try {
+        const gato = await searchCat(id)
+        if (gato.rowCount === 0) return res.sendStatus(404)
+        if (userId !== gato.rows[0].idtutor) return res.sendStatus(401)
+        await deleteCat(id)
         res.send()
     } catch (error) {
         res.status(500).send(error.message)
